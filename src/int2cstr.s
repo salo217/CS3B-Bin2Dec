@@ -42,50 +42,50 @@ int2cstr:	        // define String_length
     MOV X3, #0              // set offset = 0
     MOV X7, #10             // set X7 = 10 (constant)
     CMP X0, #0
-    B.GE skipSignFlag       // if value is not negative, jump to digitLoop
+    B.GE skipSignFlag_INT2CSTR       // if value is not negative, jump to digitLoop
 
     MOV X5, #1              // set sign flag if value is negative
 
-    skipSignFlag:
+skipSignFlag_INT2CSTR:
 
-    digitLoop:
+digitLoop_INT2CSTR:
 
     SDIV X6, X0, X7        // divide num by 10 and store quotient
     MSUB X2, X6, X7, X0    // get remainder by using num - (quotient * 10)
     MOV X0, X6              // make num = quotient
     CMP X2, #0              // check if remainder is positive or negative
-    B.GE skipNegate         // skip negate if already positive
+    B.GE skipNegate_INT2CSTR         // skip negate if already positive
 
     NEG X2, X2              // Negate the remainder
 
-    skipNegate: 
+skipNegate_INT2CSTR: 
 
     ADD     X2, X2, #'0'    // convert digit to ASCII
     STRB    W2, [X1, X3]    // store char at buffer[offset]
     ADD     X3, X3, #1      // offset++
 
     CMP X0, #0              // check if quotient = 0
-    B.NE digitLoop          // jump to start if not equal to 0
+    B.NE digitLoop_INT2CSTR          // jump to start if not equal to 0
 
 
 
     CMP X5, #1              // check if sign flag = 1
-    B.NE skipNegativeSign   // if not, don't add '-' to cstring
+    B.NE skipNegativeSign_INT2CSTR   // if not, don't add '-' to cstring
 
     MOV     W2, #'-'        // ASCII '-'
     STRB    W2, [X1, X3]    // store at buffer[offset]
     ADD     X3, X3, #1      // increment offset
 
-    skipNegativeSign:
+skipNegativeSign_INT2CSTR:
 
     SUB X3, X3, #1          // X3 = last used index
     MOV X8, X3              // X8 = right index
     MOV X9, #0              // X9 = left index
 
-    reverse_loop:
+reverse_loop_INT2CSTR:
 
     CMP X9, X8              // while left < right
-    B.GE reverse_done
+    B.GE reverse_done_INT2CSTR
 
     LDRB W10, [X1, X9]      // temp = buf[left]
     LDRB W11, [X1, X8]      // right
@@ -94,9 +94,9 @@ int2cstr:	        // define String_length
 
     ADD X9, X9, #1
     SUB X8, X8, #1
-    B   reverse_loop
+    B   reverse_loop_INT2CSTR
 
-    reverse_done:
+reverse_done_INT2CSTR:
 
     ADD X3, X3, #1          // increment offset
     MOV W2, #0              // get null value

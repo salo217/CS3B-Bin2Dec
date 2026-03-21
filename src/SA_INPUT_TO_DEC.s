@@ -32,50 +32,50 @@ SA_INPUT_TO_DEC:   // define SA_INPUT_TO_DEC
 
     LDRB W3, [X0]           // peek at the first character
     CMP W3, #0              // check if string is empty
-    B.EQ return_zero        // if empty, return 0
+    B.EQ return_zero_INPUT_TO_DEC        // if empty, return 0
 
     CMP W3, #'1'            // check if first bit is '1'
-    B.EQ set_negative       // if so, use negative baseline
+    B.EQ set_negative_INPUT_TO_DEC       // if so, use negative baseline
 
     MOV X1, #0              // set positive baseline (0)
-    B start_loop            // proceed to loop
+    B start_loop_INPUT_TO_DEC            // proceed_INPUT_TO_DEC to loop
 
-set_negative:
+set_negative_INPUT_TO_DEC:
     MOV X1, #-1             // set negative baseline (-1)
 
-start_loop:
+start_loop_INPUT_TO_DEC:
     ADD X0, X0, #1          // skip the first character
     MOV X5, #2              // set multiplier to 2
 
-main_loop:
+main_loop_INPUT_TO_DEC:
     LDRB W3, [X0], #1       // get next character and increment pointer
     CMP W3, #0              // check for null terminator
-    B.EQ return_result      // if null, we are done
+    B.EQ return_result_INPUT_TO_DEC      // if null, we are done
 
     // Overflow check: ensure we can safely double the number
     ASR X2, X1, #62         // check if bits 63 and 62 match
     CMP X2, #0              // if both are 0, it is safe
-    B.EQ proceed
+    B.EQ proceed_INPUT_TO_DEC
     CMP X2, #-1             // if both are 1, it is safe
-    B.NE overflow_error     // otherwise, overflow will occur
+    B.NE overflow_error_INPUT_TO_DEC     // otherwise, overflow will occur
 
-proceed:
+proceed_INPUT_TO_DEC:
     MUL X1, X1, X5          // total = total * 2
     SUB W3, W3, #'0'        // convert ASCII to digit
     ADD X1, X1, X3          // total = total + digit
-    B main_loop             // repeat
+    B main_loop_INPUT_TO_DEC             // repeat
 
-overflow_error:
+overflow_error_INPUT_TO_DEC:
     LDR X2, =0x7FFFFFFFFFFFFFFF
     ADDS X2, X2, #1         // force the V (overflow) flag
     MOV X1, #0              // set result to 0
-    B return_result
+    B return_result_INPUT_TO_DEC
 
-return_zero:
+return_zero_INPUT_TO_DEC:
     MOV X1, #0              // handle empty string case
 
-return_result:
+return_result_INPUT_TO_DEC:
     MOV X0, X1              // move result to X0
     RET                     // return
 
-.end // end of program
+.end // end of programp

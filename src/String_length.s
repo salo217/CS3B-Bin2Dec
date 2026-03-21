@@ -33,15 +33,15 @@ String_length:	// define String_length
     MOV X1, #0		    // Set initial offset = 0
     MOV X2, X0		    // load string pointer into X2
     
-    loop:
+loop_STRING_LENGTH:
     LDRB W2, [X0, X1]	// load char value into W2 by adding the string pointer + offset
     CMP W2, #0          // compare char to null
-    B.EQ endOfLoop      // break out of loop if equal to null
+    B.EQ endOfLoop_STRING_LENGTH      // break out of loop if equal to null
     
     ADD X1, X1, #1      // increment offset
-    B loop				// jump to beginning of loop
+    B loop_STRING_LENGTH				// jump to beginning of loop
     
-    endOfLoop:
+endOfLoop_STRING_LENGTH:
     MOV X0, X1			// set return value (string length) equal to offset
 
     RET					// return
