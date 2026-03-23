@@ -70,13 +70,20 @@ skipNegate_INT2CSTR:
 
 
     CMP X5, #1              // check if sign flag = 1
-    B.NE skipNegativeSign_INT2CSTR   // if not, don't add '-' to cstring
+    B.NE addPositiveSign_INT2CSTR   // if it is, add '-', else add '+'
 
     MOV     W2, #'-'        // ASCII '-'
     STRB    W2, [X1, X3]    // store at buffer[offset]
     ADD     X3, X3, #1      // increment offset
+    B proceed_INT2CSTR
+    
+addPositiveSign_INT2CSTR:
 
-skipNegativeSign_INT2CSTR:
+    MOV     W2, #'+'        // ASCII '+'
+    STRB    W2, [X1, X3]    // store at buffer[offset]
+    ADD     X3, X3, #1      // increment offset
+
+proceed_INT2CSTR:
 
     SUB X3, X3, #1          // X3 = last used index
     MOV X8, X3              // X8 = right index
