@@ -1,5 +1,5 @@
 // Lillian Le
-// CS3B - Group Project Bin2Dec
+
 // 3/23/26
 // Bin2Dec Program: The Bin2Dec program will __
 // Algorithm/Pseudocode:
