@@ -41,8 +41,8 @@ LL_SET_LOOP:
 	CMP X2, #0              // compare X2 to #0
 	B.LE LL_SET_LOOP_END    // jump to LL_SET_LOOP_END if equal to #0
 	
-	// Store X1 at address of X0
-	STRB X1, [X0]           // store byte at X1 into address of X0
+	// Store W1 at address of X0
+	STRB W1, [X0]           // store byte at W1 into address of X0
 	
 	// Increment X0
 	ADD X0, X0, #1          // add #1 to X0
