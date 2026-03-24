@@ -44,10 +44,10 @@ LL_SET_LOOP:
 	// Store W1 at address of X0
 	STRB W1, [X0]           // store byte at W1 into address of X0
 	
-	// Increment X0
+	// Increment X0 (pointer)
 	ADD X0, X0, #1          // add #1 to X0
 	
-	// Decrement X2
+	// Decrement X2 (counter)
 	SUB X2, X2, #1          // subtract #1 from X2
 	
 	// Loop to top of loop
