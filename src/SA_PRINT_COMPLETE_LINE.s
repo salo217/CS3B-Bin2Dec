@@ -40,7 +40,14 @@ SA_PRINT_COMPLETE_LINE:	// define SA_PRINT_COMPLETE_LINE
 	LDR X0, [SP], #16		// pop decimal buffer into X0
 	BL putstring			// print decimal string
 
+	LDR X0, =sNewline		// load newline string
+	BL putstring			// move cursor to next line
+
 	LDR LR, [SP], #16		// pop return address
-	RET
+	RET						// return
+
+	.data
+sNewline: .asciz "\n"
+	.text
 	
 .end	// end of program
