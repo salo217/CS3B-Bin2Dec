@@ -77,10 +77,13 @@ LL_GET_INPUT_LOOP:
 	STR X0, [SP, #-16]!      // push X0 to stack (preserve char pointer value)
 	
 	LDR X0, =sz_bits_buffer  // move address of bits_buffer to X0
-	MOV X1, #'\0'            // move char null terminator into X1
+	MOV X1, #0               // move char null terminator into X1
 	MOV X2, #17              // move size of bits_buffer into X2
 	BL LL_SET                // call LL_SET function
 	
+	// Reset counter to #15
+	MOV X6, #15              // set X6 to 15
+
 	// Restore X0 from stack
 	LDR X0, [SP], #16       // pop X0 from stack
 	
