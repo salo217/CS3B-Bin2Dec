@@ -56,8 +56,8 @@ LL_GET_INPUT:
 	
 	// Loop until null terminator is encountered
 	// W1 is pointer to character
-	// set X6 (counter) to 15
-	MOV X6, #15              // set X6 to 15
+	// set X6 (counter) to 16
+	MOV X6, #16              // set X6 to 16
 	
 LL_GET_INPUT_LOOP:
 	// Check if char == '\0'
@@ -81,13 +81,13 @@ LL_GET_INPUT_LOOP:
 	MOV X2, #17              // move size of bits_buffer into X2
 	BL LL_SET                // call LL_SET function
 	
-	// Reset counter to #15
-	MOV X6, #15              // set X6 to 15
+	// Reset counter to #16
+	MOV X6, #16              // set X6 to 16
 
 	// Restore X0 from stack
-	LDR X0, [SP], #16       // pop X0 from stack
+	LDR X0, [SP], #16        // pop X0 from stack
 	
-	B LL_GET_INPUT_SKIP     // jump to label/skip next check
+	B LL_GET_INPUT_SKIP      // jump to label/skip next check
 	
 LL_GET_INPUT_NC:
 	// Check if X7 == 0
@@ -123,12 +123,13 @@ LL_GET_INPUT_SKIP:
 
 LL_GET_INPUT_L_END:
 
-	// Flip bits in bits_buffer **EDIT THIS SECTION !!!
+	// Flip bits in bits_buffer
 	// set start (X2) and end pointer (X3)
 	LDR X2, =sz_bits_buffer  // load address of sz_bits_buffer
 	ADD X2, X2, X6           // add X6 (counter) to address (start of buffer)
 	LDR X3, =sz_bits_buffer  // load address of sz_bits_buffer
-	ADD X3, X3, #15          // add #15 to address (end of buffer minus \0)
+	ADD X3, X3, #16          // add #16 to address (end of buffer minus \0)
+	LDRB W7, [X3]            // save value of end pointer to X7
 	
 // start while loop
 LL_w_loop:
@@ -150,7 +151,7 @@ LL_w_loop:
 
 	// Sign extend bits_buffer
 	LDR X0, =sz_bits_buffer // set X0 to address of buffer bits
-	MOV X1, #'0'            // set X1 to #'0'
+	MOV W1, W7              // set X1 to either '1' or '0' (sign)
 	MOV X2, X6              // set X2 to X6 (counter)
 	BL LL_SET               // call LL_SET function
 	
