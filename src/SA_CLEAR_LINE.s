@@ -33,7 +33,7 @@ SA_CLEAR_LINE:
 	.data
 		// "\033[A" moves cursor UP
 		// "\r" moves to the start of line
-		sUP_AND_RESET: .asciz "\033[A\r"
+		sUP_AND_RESET: .asciz "\033[A\r                                     \r"
 	.text
 
 .end
