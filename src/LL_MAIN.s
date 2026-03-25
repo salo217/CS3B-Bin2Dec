@@ -10,7 +10,8 @@
 // 1.4) Call SA_PRINT_COMPLETE_LINE
 // 1.5) Call LL_GET_INPUT (only q, c, and ENTER as valid characters)
 // 1.6) If return value equals #0, then jump to QUIT
-// 1.7) Loop to top of loop
+// 1.7) Call SA_CLEAR_LINE
+// 1.8) Loop to top of loop
 // 2) QUIT
 // 2.1) Call SA_CLEAR_LINE
 // 2.2) Terminate program
@@ -51,6 +52,9 @@ MAIN_LOOP:
 	// If X0 == #0, jump to MAIN_QUIT label
 	CMP X0, #0               // compare X0 (return value) to #0
 	B.EQ MAIN_QUIT           // jump to MAIN_QUIT if equal to #0
+
+	// Call SA_CLEAR_LINE
+	BL SA_CLEAR_LINE         // jump to SA_CLEAR_LINE function
 	
 	// Loop to top of MAIN_LOOP
 	B MAIN_LOOP              // jump to top of loop
