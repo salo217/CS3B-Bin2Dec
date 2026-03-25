@@ -27,7 +27,6 @@ SA_PRINT_COMPLETE_LINE:	// define SA_PRINT_COMPLETE_LINE
 	STR LR, [SP, #-16]!		// push return address
 	STR X2, [SP, #-16]!		// push decimal buffer
 	STR X1, [SP, #-16]!		// push arrow buffer
-	//STR X1, [SP, #-16]!		// push binary input
 	STR X0, [SP, #-16]!		// push decimal value
 
 	LDR X0, [SP], #16		// pop decimal value into X0
